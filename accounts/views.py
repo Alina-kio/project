@@ -3,16 +3,17 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import CustomUser
-from .serializers import CustomUserSerializer, ChangePasswordSerializer
+from .serializers import LoginSerializer, RegistrationSerializer, ChangePasswordSerializer
 from django.utils import timezone
 from rest_framework.generics import UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.contrib.auth import authenticate
 
 
 class RegistrationView(APIView):
     def post(self, request):
-        serializer = CustomUserSerializer(data=request.data)
+        serializer = RegistrationSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
             refresh = RefreshToken.for_user(user)
@@ -30,16 +31,14 @@ class RegistrationView(APIView):
 
 
 
+
 class LoginView(APIView):
     def post(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
 
-        user = CustomUser.objects.filter(email=email).first()
-
-        print("Email:", email)
-        print("Password:", password)
-        print("User:", user)
+        # user = CustomUser.objects.filter(email=email).first()
+        user = authenticate(email=email, password=password)
 
         if user:
             user.last_login = timezone.now()
@@ -53,11 +52,7 @@ class LoginView(APIView):
                 },
                 status=status.HTTP_200_OK,
             )
-
-        return Response(
-            {"detail": "Invalid credentials"},
-            status=status.HTTP_401_UNAUTHORIZED
-        )
+        return Response({"detail": "Invalid data"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 
