@@ -22,6 +22,7 @@ class RegistrationView(APIView):
                     "user": serializer.data,
                     "refresh": str(refresh),
                     "access": str(refresh.access_token),
+                    'message': 'Registration successful'
                 },
                 status=status.HTTP_201_CREATED,
                 headers={'Location': ''}
