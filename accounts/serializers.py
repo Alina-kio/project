@@ -26,9 +26,6 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 
 
-
-
-
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
