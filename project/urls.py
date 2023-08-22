@@ -17,7 +17,9 @@ urlpatterns = [
 
     path('register/', RegistrationView.as_view(), name='registration'),
     path('login/', LoginView.as_view(), name='login'),
-    path('change-password/', ChangePasswordView.as_view(), name='change-password'),
+    # path('change-password/', ChangePasswordView.as_view(), name='change-password'),
+
+    path('profile/', ProfileView.as_view(), name='profile'),
 
     path('category/', views.CategoryAPIViewSet.as_view(
         {'get': 'list', 'post': 'create'})),
@@ -31,6 +33,8 @@ urlpatterns = [
 
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+
 ]
 
 

@@ -1,7 +1,16 @@
 from rest_framework import serializers
-from .models import CustomUser
+from .models import CustomUser, Profile
 
-    
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
+
+
+
+
 
 class RegistrationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,7 +39,7 @@ class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['email', 'username', 'password', 'confirm_password']
-        extra_kwargs = {"confirm_password": {"write_only": True}}
+        # extra_kwargs = {"confirm_password": {"write_only": True}}
 
 
 

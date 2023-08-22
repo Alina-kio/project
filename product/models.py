@@ -1,8 +1,7 @@
 from django.db import models
 from django.conf import settings
-from django.dispatch import receiver
-from django.db.models.signals import pre_save
-
+# from django.dispatch import receiver
+# from django.db.models.signals import pre_save
 
 
 class Category(models.Model):
@@ -61,7 +60,13 @@ class Application(models.Model):
         return self.name
 
 
+class Cart(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    ordered = models.BooleanField(default=False, null=True)
+    total_price = models.FloatField(default=0)
 
+    def __str__(self):
+        return str(self.user.username)
 
 
 # class Cart(models.Model):
